@@ -147,13 +147,54 @@ final class ContaController
     {
         try{
 
+            $idConta = intval($args['idConta'], 10);
+
+            // Verificar se idConta está sendo passado
+            if(is_null($idConta) || empty($idConta)){
+                throw new Exception("id da conta não encontrado");
+            }
+
+            //Verificar se conta existe
+            $contaDAO = new ContaDAO();
+            $conta = $contaDAO->getById($idConta);
+
+            if(!isset($conta)){
+                throw new Exception('Conta não encontrada');
+            }
+
+            $pessoaDAO = new PessoaDAO();
+            $pessoa = $pessoaDAO->getById($conta->getIdPessoa());
+
+            $response->getBody()->write(
+                json_encode(
+                    [
+                        "idConta" => $conta->getIdConta(),
+                        "idPessoa" => $conta->getIdPessoa(),
+                        "saldo" => round($conta->getSaldo(), 2),
+                        "limiteSaqueDiario" => round($conta->getLimiteSaqueDiario(), 2),
+                        "flagAtivo" => $conta->getFlagAtivo(),
+                        "tipoConta" => $conta->getTipoConta(),
+                        "dataCriacao" => $conta->getDataCriacao(),
+                        "pessoa" => [
+                            "idPessoa" => $pessoa->getIdPessoa(),
+                            "nome" => $pessoa->getNome(),
+                            "cpf" => $pessoa->getCPF(),
+                            "dataNascimento" => $pessoa->getDataNascimento(),
+                        ]
+
+                    ],
+                    JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+                )
+            );
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+
         }catch(\Exception | \Throwable $ex) {
             $error = [
-                'status' => 500,
-                'error' => \Exception::class,
-                'code' => '001',
-                'userMessage' => "Erro na aplicação, entre em contato com o administrador do sistema.",
-                'developerMessage' => $ex->getMessage()
+                'status' => 'error',
+                'message' => $ex->getMessage()
             ];
 
             $response->getBody()->write(
