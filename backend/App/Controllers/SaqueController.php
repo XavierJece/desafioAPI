@@ -33,6 +33,11 @@ final class SaqueController
                 throw new Exception('Conta não encontrada');
             }
 
+            // Verificando se conta está ativa
+            if($conta->getFlagAtivo() != 1){
+                throw new Exception('Não é possível fazer transações um uma conta desativada. Entre em contato com seu gerente para saber mais.');
+            }
+
             // verificar se ainda não atingiu o limite diário
             $transacaoDAO = new TransacaoDAO();
             $totalSaqueToday = $transacaoDAO->getTotalWithdrawToday($idConta);
