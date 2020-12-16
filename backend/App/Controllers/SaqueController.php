@@ -28,7 +28,6 @@ final class SaqueController
             $contaDAO = new ContaDAO();
             $conta = $contaDAO->getById($idConta);
 
-            //Verificar se a conta está ativa
             if(!isset($conta)){
                 throw new Exception('Conta não encontrada');
             }
