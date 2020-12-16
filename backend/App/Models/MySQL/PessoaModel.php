@@ -2,8 +2,6 @@
 
 namespace App\Models\MySQL;
 
-use DateTime;
-
 final class PessoaModel
 {
 
@@ -24,7 +22,7 @@ final class PessoaModel
     private $cpf;
 
     /**
-     * @var DateTime
+     * @var string
      */
     private $dataNascimento;
 
@@ -56,9 +54,9 @@ final class PessoaModel
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getDataNascimento(): DateTime
+    public function getDataNascimento(): string
     {
         return $this->dataNascimento;
     }
@@ -97,10 +95,10 @@ final class PessoaModel
     }
 
     /**
-     * @param DateTime $dataNascimento
+     * @param string $dataNascimento
      * @return self
      */
-    public function setDataNascimento(DateTime $dataNascimento): self
+    public function setDataNascimento(string $dataNascimento): self
     {
         $this->dataNascimento = $dataNascimento;
         return $this;

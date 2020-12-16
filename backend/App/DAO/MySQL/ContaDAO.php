@@ -47,6 +47,34 @@ class ContaDAO extends Connection
         return $conta;
     }
 
+    public function getByPessoa(int $idPessoa): ?ContaModel
+    {
+        $statement = $this->pdo
+                ->prepare('SELECT * FROM `contas`
+                        WHERE `idPessoa` = :idPessoa;');
+        $statement->bindValue(':idPessoa', $idPessoa, \PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $dataConta= $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        if(count($dataConta) === 0){
+            return null;
+        }
+
+        $conta = new ContaModel();
+
+        $conta->setIdConta($dataConta[0]['idConta'])
+            ->setIdPessoa($dataConta[0]['idPessoa'])
+            ->setSaldo($dataConta[0]['saldo'])
+            ->setLimiteSaqueDiario($dataConta[0]['limiteSaqueDiario'])
+            ->setFlagAtivo($dataConta[0]['flagAtivo'])
+            ->setTipoConta($dataConta[0]['tipoConta'])
+            ->setDataCriacao($dataConta[0]['dataCriacao']);
+
+        return $conta;
+    }
+
 
     public function update(ContaModel $conta): ContaModel
     {
@@ -73,8 +101,21 @@ class ContaDAO extends Connection
         $statement->execute();
 
         return $conta;
+    }
 
+    public function insert(ContaModel $conta): ?ContaModel
+    {
+        $statement = $this->pdo
+                ->prepare('INSERT INTO `contas`
+                    (`idPessoa`, `limiteSaqueDiario`, `tipoConta`, `dataCriacao`)
+                    VALUES (:idPessoa, :limiteSaqueDiario, :tipoConta, current_timestamp());'
+                );
+        $statement->bindValue(':idPessoa', $conta->getIdPessoa(), \PDO::PARAM_INT);
+        $statement->bindValue(':limiteSaqueDiario', $conta->getLimiteSaqueDiario());
+        $statement->bindValue(':tipoConta', $conta->getTipoConta());
+        $statement->execute();
 
+        return $this->getByPessoa($conta->getIdPessoa());
 
     }
 
