@@ -8,6 +8,7 @@ use function src\{
 };
 
 use App\Controllers\{
+    SaqueController,
     TransacaoController
 };
 
@@ -34,6 +35,7 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 $app->get('/conta/{idConta}/transacoes', TransacaoController::class . ':index');
+$app->post('/conta/{idConta}/saque', SaqueController::class . ':create');
 
 
 // =========================================

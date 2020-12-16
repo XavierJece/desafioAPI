@@ -34,19 +34,37 @@ class TransacaoDAO extends Connection
         return $transacoes;
     }
 
-    public function getPeriodByConta(int $idConta, DateTime $initial, DateTime $final):array
+    public function getTotalWithdrawToday(int $idConta): int
     {
+        $statement = $this->pdo
+                ->prepare('SELECT (SUM(valor) * -1) as "saqueToday"
+                    FROM `transacoes`
+                    WHERE `dataTransacao` BETWEEN CONCAT(CURDATE(), " 00:00:00") AND CONCAT(CURDATE(), " 23:59:59")
+                    AND `idConta` = :idConta
+                    AND valor < 0;');
+        $statement->bindValue(':idConta', $idConta, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $res= $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        if(count($res) === 0){
+            return 0;
+        }
+
+        return $res[0]['saqueToday'];
 
     }
 
-    public function getById(int $id): ?TransacaoModel
+    public function insert(int $idConta, float $valor): void
     {
 
-    }
-
-
-    public function insert(TransacaoModel $post): TransacaoModel
-    {
+        $statement = $this->pdo
+                ->prepare('INSERT INTO `transacoes`
+                    (`idConta`, `valor`, dataTransacao) VALUES
+                    (:idConta, :valor, current_timestamp());');
+        $statement->bindValue(':idConta', $idConta, \PDO::PARAM_INT);
+        $statement->bindValue(':valor', $valor);
+        $statement->execute();
 
     }
 

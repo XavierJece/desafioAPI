@@ -2,8 +2,6 @@
 
 namespace App\Models\MySQL;
 
-use DateTime;
-
 final class ContaModel
 {
 
@@ -39,7 +37,7 @@ final class ContaModel
     private $tipoConta;
 
     /**
-     * @var DateTime
+     * @var string
      */
     private $dataCriacao;
 
@@ -95,9 +93,9 @@ final class ContaModel
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getDataCriacao(): DateTime
+    public function getDataCriacao(): string
     {
         return $this->dataCriacao;
     }
@@ -122,6 +120,16 @@ final class ContaModel
     public function setIdPessoa(int $id): self
     {
         $this->idPessoa = $id;
+        return $this;
+    }
+
+    /**
+     * @param float $saldo
+     * @return self
+     */
+    public function setSaldo(float $saldo): self
+    {
+        $this->saldo = $saldo;
         return $this;
     }
 
@@ -156,10 +164,10 @@ final class ContaModel
     }
 
     /**
-     * @param DateTime $dataCriacao
+     * @param string $dataCriacao
      * @return self
      */
-    public function setDataCriacao(DateTime $dataCriacao): self
+    public function setDataCriacao(string $dataCriacao): self
     {
         $this->dataCriacao = $dataCriacao;
         return $this;

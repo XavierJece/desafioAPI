@@ -21,12 +21,60 @@ class ContaDAO extends Connection
 
     public function getById(int $id): ?ContaModel
     {
+        $statement = $this->pdo
+                ->prepare('SELECT * FROM `contas`
+                        WHERE `idConta` = :id;');
+        $statement->bindValue(':id', $id, \PDO::PARAM_INT);
 
+        $statement->execute();
+
+        $dataConta= $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        if(count($dataConta) === 0){
+            return null;
+        }
+
+        $conta = new ContaModel();
+
+        $conta->setIdConta($dataConta[0]['idConta'])
+            ->setIdPessoa($dataConta[0]['idPessoa'])
+            ->setSaldo($dataConta[0]['saldo'])
+            ->setLimiteSaqueDiario($dataConta[0]['limiteSaqueDiario'])
+            ->setFlagAtivo($dataConta[0]['flagAtivo'])
+            ->setTipoConta($dataConta[0]['tipoConta'])
+            ->setDataCriacao($dataConta[0]['dataCriacao']);
+
+        return $conta;
     }
 
 
-    public function insert(ContaModel $post): ContaModel
+    public function update(ContaModel $conta): ContaModel
     {
+        $statement = $this->pdo
+                ->prepare('UPDATE `contas`
+                SET
+                    `idPessoa` = :idPessoa,
+                    `saldo` = :saldo,
+                    `limiteSaqueDiario` = :limiteSaqueDiario,
+                    `flagAtivo`= :flagAtivo,
+                    `tipoConta`= :tipoConta,
+                    `dataCriacao`= :dataCriacao
+                WHERE
+                    `idConta`= :id;'
+                );
+        $statement->bindValue(':id', $conta->getIdConta(), \PDO::PARAM_INT);
+        $statement->bindValue(':idPessoa', $conta->getIdPessoa());
+        $statement->bindValue(':saldo', $conta->getSaldo());
+        $statement->bindValue(':limiteSaqueDiario', $conta->getLimiteSaqueDiario());
+        $statement->bindValue(':flagAtivo', $conta->getFlagAtivo());
+        $statement->bindValue(':tipoConta', $conta->getTipoConta());
+        $statement->bindValue(':dataCriacao', $conta->getDataCriacao());
+
+        $statement->execute();
+
+        return $conta;
+
+
 
     }
 
