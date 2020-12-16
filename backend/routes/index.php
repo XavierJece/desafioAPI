@@ -8,8 +8,10 @@ use function src\{
 };
 
 use App\Controllers\{
+    AtivarContaController,
     ContaController,
     DepositoController,
+    DesativarContaController,
     SaqueController,
     TransacaoController
 };
@@ -36,11 +38,15 @@ $app->get('/', function (Request $request, Response $response) {
         ->withStatus(200);
 });
 
-$app->get('/conta/{idConta}/transacoes', TransacaoController::class . ':index');
 $app->post('/conta', ContaController::class . ':create');
 $app->get('/conta/{idConta}', ContaController::class . ':show');
+
+$app->get('/conta/{idConta}/transacoes', TransacaoController::class . ':index');
 $app->post('/conta/{idConta}/saque', SaqueController::class . ':create');
 $app->post('/conta/{idConta}/deposito', DepositoController::class . ':create');
+
+$app->patch('/conta/{idConta}/ativar', AtivarContaController::class . ':update');
+$app->patch('/conta/{idConta}/desativar', DesativarContaController::class . ':update');
 
 
 // =========================================

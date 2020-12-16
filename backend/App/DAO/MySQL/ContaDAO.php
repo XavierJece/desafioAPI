@@ -119,13 +119,31 @@ class ContaDAO extends Connection
 
     }
 
-    public function ativar(int $id): ContaModel
+    public function ativar(int $idConta): void
     {
+        $statement = $this->pdo
+                ->prepare('UPDATE `contas`
+                SET
+                    `flagAtivo`= 1
+                WHERE
+                    `idConta`= :idConta;'
+                );
+        $statement->bindValue(':idConta', $idConta, \PDO::PARAM_INT);
+        $statement->execute();
 
     }
 
-    public function desativar(int $id): void
+    public function desativar(int $idConta): void
     {
+        $statement = $this->pdo
+                ->prepare('UPDATE `contas`
+                SET
+                    `flagAtivo`= 0
+                WHERE
+                    `idConta`= :idConta;'
+                );
+        $statement->bindValue(':idConta', $idConta, \PDO::PARAM_INT);
+        $statement->execute();
 
     }
 }
