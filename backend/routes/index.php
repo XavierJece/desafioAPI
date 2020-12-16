@@ -8,10 +8,7 @@ use function src\{
 };
 
 use App\Controllers\{
-    PostController,
-    AuthController,
-    CommentController,
-    UserController
+    TransacaoController
 };
 
 $app = new \Slim\App(slimConfiguration());
@@ -36,12 +33,8 @@ $app->get('/', function (Request $request, Response $response) {
         ->withStatus(200);
 });
 
-$app->post('/login', AuthController::class . ':login');
-$app->post('/users', UserController::class . ':create');
+$app->get('/conta/{idConta}/transacoes', TransacaoController::class . ':index');
 
-
-$app->get('/posts', PostController::class . ':index');
-$app->get('/posts/{postId}', PostController::class . ':show');
 
 // =========================================
 

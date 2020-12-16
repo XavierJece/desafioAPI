@@ -15,9 +15,23 @@ class TransacaoDAO extends Connection
         parent::__construct();
     }
 
-    public function getAllByConta(int $idConta): array
+    public function getAllByConta(int $idConta, string $initial, string $final): array
     {
+        $statement = $this->pdo
+                ->prepare('SELECT `idTransacao`, `idConta`, `valor`, `dataTransacao`
+                    FROM `transacoes`
+                        WHERE
+                            `idConta` = :idConta
+                        AND `dataTransacao` between :dateInitial and :dateFinal
+                        ORDER by `dataTransacao`   DESC;');
+        $statement->bindValue(':idConta', $idConta, \PDO::PARAM_INT);
+        $statement->bindValue(':dateInitial', $initial);
+        $statement->bindValue(':dateFinal', $final);
+        $statement->execute();
 
+        $transacoes= $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $transacoes;
     }
 
     public function getPeriodByConta(int $idConta, DateTime $initial, DateTime $final):array

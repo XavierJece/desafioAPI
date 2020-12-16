@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\DAO\MySQL\TransacaoDAO;
+use DateTime;
+use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -11,18 +14,49 @@ final class TransacaoController
     {
         try{
 
-        }catch(\Exception | \Throwable $ex) {
-            $error = [
-                'status' => 500,
-                'error' => \Exception::class,
-                'code' => '001',
-                'userMessage' => "Erro na aplicação, entre em contato com o administrador do sistema.",
-                'developerMessage' => $ex->getMessage()
-            ];
+            $idConta = intval($args['idConta'], 10);
+
+            if(is_null($idConta) || empty($idConta)){
+                throw new Exception("id da conta não encontrado");
+            }
+
+            if(!isset($request->getQueryParams('')['dateInitial'])){
+                $date1 = new DateTime('1900-01-01 00:00:00');
+            }else if(empty($request->getQueryParams('')['dateInitial'])){
+                $date1 = new DateTime('1900-01-01 00:00:00');
+            }else{
+                $date1 = new DateTime($request->getQueryParams('')['dateInitial']);
+            }
+
+            if(!isset($request->getQueryParams('')['dateFinal'])){
+                $date2 = new DateTime();
+            }else if(empty($request->getQueryParams('')['dateFinal'])){
+                $date2 = new DateTime();
+            }else{
+                $date2 = new DateTime($request->getQueryParams('')['dateFinal']);
+            }
+
+            if(strtotime($date1) > strtotime($date2)){
+                $initial = $date2;
+                $final = $date1;
+            }else if(strtotime($date1) < strtotime($date2)){
+                $initial = $date1;
+                $final = $date2;
+            }else{
+                throw new Exception("Datas iguais");
+            }
+
+            $transacaoDAO = new TransacaoDAO();
+
+            $res = $transacaoDAO->getAllByConta(
+                $idConta,
+                $initial->format(DateTime::ISO8601),
+                $final->format(DateTime::ISO8601)
+            );
 
             $response->getBody()->write(
                 json_encode(
-                    $error,
+                    $res,
                     JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
                 )
             );
@@ -30,38 +64,6 @@ final class TransacaoController
             return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
-        }
-    }
-
-    public function create(Request $request, Response $response, array $args): Response
-    {
-        try{
-
-        }catch(\Exception | \Throwable $ex) {
-            $error = [
-                'status' => 500,
-                'error' => \Exception::class,
-                'code' => '001',
-                'userMessage' => "Erro na aplicação, entre em contato com o administrador do sistema.",
-                'developerMessage' => $ex->getMessage()
-            ];
-
-            $response->getBody()->write(
-                json_encode(
-                    $error,
-                    JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-                )
-            );
-
-            return $response
-                ->withHeader('Content-Type', 'application/json')
-                ->withStatus(200);
-        }
-    }
-
-    public function show(Request $request, Response $response, array $args): Response
-    {
-        try{
 
         }catch(\Exception | \Throwable $ex) {
             $error = [
