@@ -67,11 +67,8 @@ final class TransacaoController
 
         }catch(\Exception | \Throwable $ex) {
             $error = [
-                'status' => 500,
-                'error' => \Exception::class,
-                'code' => '001',
-                'userMessage' => "Erro na aplicação, entre em contato com o administrador do sistema.",
-                'developerMessage' => $ex->getMessage()
+                'status' => "error",
+                'message' => $ex->getMessage()
             ];
 
             $response->getBody()->write(

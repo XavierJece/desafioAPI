@@ -39,6 +39,7 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 $app->post('/conta', ContaController::class . ':create');
+$app->get('/conta', ContaController::class . ':index');
 $app->get('/conta/{idConta}', ContaController::class . ':show');
 
 $app->get('/conta/{idConta}/transacoes', TransacaoController::class . ':index');

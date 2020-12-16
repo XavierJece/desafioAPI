@@ -16,7 +16,12 @@ class ContaDAO extends Connection
 
     public function getAll(): array
     {
+        $statement = $this->pdo->prepare('SELECT * FROM `contas`;');
+        $statement->execute();
 
+        $contas= $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $contas;
     }
 
     public function getById(int $id): ?ContaModel

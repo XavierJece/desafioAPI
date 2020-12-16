@@ -15,13 +15,24 @@ final class ContaController
     {
         try{
 
+            $contaDAO = new ContaDAO();
+            $contas = $contaDAO->getAll();
+
+            $response->getBody()->write(
+                json_encode(
+                    $contas,
+                    JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+                )
+            );
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+
         }catch(\Exception | \Throwable $ex) {
             $error = [
-                'status' => 500,
-                'error' => \Exception::class,
-                'code' => '001',
-                'userMessage' => "Erro na aplicação, entre em contato com o administrador do sistema.",
-                'developerMessage' => $ex->getMessage()
+                'status' => "error",
+                'message' => $ex->getMessage()
             ];
 
             $response->getBody()->write(
