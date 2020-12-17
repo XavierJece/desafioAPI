@@ -1,9 +1,9 @@
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
-import { FiChevronLeft, FiFrown } from 'react-icons/fi';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { FiChevronLeft } from 'react-icons/fi';
+import { Link, useRouteMatch } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import api from '../../services/api';
-import { ContaInfo, Header, Transacao, Form, Error } from './style';
+import { ContaInfo, Header, Transacao, Form } from './style';
 
 interface ContaParams {
   conta: string;
@@ -42,11 +42,9 @@ interface FilterDate {
 
 const Conta: React.FC = () => {
   const { params } = useRouteMatch<ContaParams>();
-  const [inputError, setInputError] = useState('');
   const [filterDate, setFilterDate] = useState<FilterDate>({ initial: "", final: ""});
   const [conta, setConta] = useState<Conta | null>(null);
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
-  const history = useHistory();
 
   useEffect(() => {
     api.get<Conta>(`/conta/${params.conta}`).then((response) => {
@@ -183,12 +181,6 @@ const Conta: React.FC = () => {
           </div>
           <button type="submit">Filtrar</button>
           </div>
-        {inputError && (
-          <Error>
-            <span>{inputError}</span>
-            <FiFrown size={20} />
-          </Error>
-        )}
       </Form>
 
       {transacoes.map((transacao, i) => (

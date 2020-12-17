@@ -1,4 +1,4 @@
-import { shade, transparentize } from 'polished';
+import { shade } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface TransacaoProps{
