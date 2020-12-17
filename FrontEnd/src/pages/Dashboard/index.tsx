@@ -20,8 +20,6 @@ interface Conta {
 }
 
 const Dashboard: React.FC = () => {
-  // const [newRepo, setNewRepo] = useState('');
-  // const [inputError, setInputError] = useState('');
   const [contas, setContas] = useState<Conta[]>([]);
 
   useEffect(() => {
@@ -36,22 +34,6 @@ const Dashboard: React.FC = () => {
     <>
       <Logo/>
       <Title>Contas <br/> Meu Banco</Title>
-
-      {/* <Form hasError={!!inputError} onSubmit={handleAddRepository}>
-        <input
-          value={newRepo}
-          onChange={(e) => setNewRepo(e.target.value)}
-          placeholder="Digite o nome do repositório"
-        />
-        <button type="submit">Pesquisar</button>
-      </Form>
-
-      {inputError && (
-        <Error>
-          <span>{inputError}</span>
-          <FiFrown size={20} />
-        </Error>
-      )} */}
 
       <Contas>
         {contas.map((conta) => (

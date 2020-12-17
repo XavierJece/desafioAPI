@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FiChevronLeft } from 'react-icons/fi';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import { FiChevronLeft, FiFrown } from 'react-icons/fi';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import api from '../../services/api';
-import { ContaInfo, Header, Transacao } from './style';
+import { ContaInfo, Header, Transacao, Form, Error } from './style';
 
 interface ContaParams {
   conta: string;
@@ -29,17 +29,24 @@ interface Conta {
   pessoa: Pessoa;
 }
 
-
 interface Transacao {
   id: number;
   valor: string;
   dataTransacao: string;
 }
 
+interface FilterDate {
+  initial: string;
+  final: string;
+}
+
 const Conta: React.FC = () => {
+  const { params } = useRouteMatch<ContaParams>();
+  const [inputError, setInputError] = useState('');
+  const [filterDate, setFilterDate] = useState<FilterDate>({ initial: "", final: ""});
   const [conta, setConta] = useState<Conta | null>(null);
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
-  const { params } = useRouteMatch<ContaParams>();
+  const history = useHistory();
 
   useEffect(() => {
     api.get<Conta>(`/conta/${params.conta}`).then((response) => {
@@ -79,6 +86,31 @@ const Conta: React.FC = () => {
       });
     }
   },[]);
+
+  const handleFilter = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const param1 = filterDate.initial.length !== 0 ? `dateInitial=${filterDate.initial}`: "";
+    const param2 = filterDate.final.length !== 0 ? `dateFinal=${filterDate.final}`: "";
+
+
+    let query = '';
+    if(param1.length !== 0 && param2.length !== 0){
+      query = `?${param1}&${param2}`;
+    }else if(param1.length === 0 && param2.length !== 0){
+      query = `?${param2}`;
+    }else if(param1.length !== 0 && param2.length === 0){
+      query = `?${param1}`;
+    }else{
+      return;
+    }
+
+    api.get<Transacao[]>(`/conta/${params.conta}/transacoes${query}`).then((response) => {
+      console.log(response.data);
+      setTransacoes(response.data);
+    });
+
+  },[params.conta, filterDate]);
 
   return (
     <>
@@ -126,12 +158,46 @@ const Conta: React.FC = () => {
         </ContaInfo>
       )}
 
-      {transacoes && transacoes.map((transacao, i) => (
+      <Form onSubmit={handleFilter}>
+        <div>
+          <div>
+            <span>Data Inicial</span>
+            <input
+              value={filterDate.initial}
+              onChange={(e) => setFilterDate({...filterDate, initial: e.target.value})}
+              placeholder="10/07/2003"
+              type="date"
+              />
+          </div>
+          <div>
+            <span>Data Final</span>
+            <input
+              value={filterDate.final}
+              onChange={(e) => setFilterDate({...filterDate, final: e.target.value})}
+              placeholder="17/12/2020"
+              type="date"
+            />
+          </div>
+        </div>
+        <button type="submit">Filtrar</button>
+      </Form>
+
+      {inputError && (
+        <Error>
+          <span>{inputError}</span>
+          <FiFrown size={20} />
+        </Error>
+      )}
+
+      {transacoes.map((transacao, i) => (
         <Transacao key={i} entrada={Number(transacao.valor) > 0}>
           <strong>{Number(transacao.valor).toLocaleString("pt-BR", { minimumFractionDigits: 2 , style: 'currency', currency: 'BRL' })}</strong>
           <p>{transacao.dataTransacao}</p>
         </Transacao>
       ))}
+      {transacoes.length === 0 && (
+         <strong>Nenhuma movimentação neste período</strong>
+      )}
     </>
   );
 };

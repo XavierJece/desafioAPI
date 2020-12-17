@@ -1,4 +1,4 @@
-import { shade } from 'polished';
+import { shade, transparentize } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface TransacaoProps{
@@ -158,5 +158,81 @@ export const Transacao = styled.div<TransacaoProps>`
   p {
     font-size: 18px;
     color: #a8a8b3;
+  }
+`;
+
+export const Form = styled.form `
+  display: flex;
+  margin-bottom: 16px;
+  width: 100%;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      & + div {
+        margin-top: 4px;
+      }
+
+      display: flex;
+
+      span {
+        border-radius: 5px 0 0 5px;
+        background: #3a3a3a;
+        border: 2px solid #3a3a3a;
+        color: #fff;
+        height: 40px;
+        padding: 8px;
+        width: 100px;
+      }
+    }
+  }
+
+
+
+  input {
+    flex: 1;
+    height: 40px;
+    padding: 0 24px;
+    border: 2px solid #fff;
+    /* border-radius: 5px 0 0 5px; */
+    color: #3a3a3a;
+    border-right: 0;
+    border-left: 0;
+
+    &::placeholder {
+      color: #a8a8b3;
+    }
+  }
+
+  button {
+    padding: 8px;
+    height: 84px;
+    background: #04d361;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid #04d361;
+    border-left: 0;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.2s;
+
+    &::placeholder {
+      color: #a8a8b3;
+    }
+
+    &:hover {
+      background: ${shade(0.2, '#04d361')};
+    }
+  }
+`;
+
+export const Error = styled.div`
+  display: flex;
+  color: #c53030;
+  margin-top: 8px;
+  align-items: center;
+  svg {
+    margin-left: 8px;
   }
 `;
