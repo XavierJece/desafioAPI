@@ -53,7 +53,7 @@ Se você for aprovad(a) nesta etapa, será convidado para uma entrevista final.
 - [x] Implementar path que realiza operação de saque em uma conta;
 - [x] Implementar path que realiza o bloqueio de uma conta;
 - [x] Implementar path que recupera o extrato de transações de uma conta;
-- [ ] Implementar tela que acessa os dados da conta escolhida.
+- [x] Implementar tela que acessa os dados da conta escolhida.
     
   - O que será diferencial:
   
