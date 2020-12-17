@@ -1,6 +1,6 @@
 # Manual de Execução
 
-O projeto foi com as tecnologias: 
+O projeto foi criado com as tecnologias:
 
 * PHP 7.2 com o Slim Framework 3 para a criação da API;
 * ReactJS para fazer as telas de interação;
@@ -72,7 +72,7 @@ Dentro da *frontEnd* copie o arquivo ``` .env-exemplo ``` para `` .env `` atuali
 
 </center>
 
-**OBS:** A url deve ser a basta do seu backend.
+**OBS:** A url deve ser a pasta do seu backend.
 **Exemplo:** REACT_APP_API_URL=http://localhost/Profissionais/05-TestePHP/backend 
 
 #### Instalação Dependências
@@ -83,7 +83,7 @@ Dentro da pasta ``` frontEnd ``` executar o comando ``` npm install ``` ou ``` y
 
 ### Back-End
 
-Para iniciar o backend basta iniciar o serviço do APACHE e MYSQL.
+Para iniciar o backend, basta iniciar o serviço do APACHE e MYSQL.
 
 <center style="max-width: 900px; margin: auto;">
 
@@ -97,7 +97,7 @@ Para iniciar o backend basta iniciar o serviço do APACHE e MYSQL.
 
 Dentro da pasta *frontEnd* executar o comando ``` npm start ``` ou ``` yarn start ```
 
-Caso a porta 3000 estiver live já inicializará o server em http://localhost:3000 caso esteja ocupada será usada a proxima porta disponível.
+Caso a porta 3000 estiver livre, já inicializará o server em http://localhost:3000, mas se estiver ocupada será usada a próxima porta disponível.
 
 <center style="max-width: 900px; margin: auto;">
 
@@ -404,7 +404,7 @@ Caso use o **Insomnia** dentro da pasta *extra* tem um arquivo ``` rotas.json ``
 
 ## Agradecimentos
 
-Quero agradecer a oportunidade de estar participando do desafio, adorei todo que aprendi e espero ter conseguido atingir todos os requisitos.
+Quero agradecer a oportunidade de estar participando do desafio, adorei tudo que aprendi e espero ter conseguido atingir todos os requisitos.
 
 Estou ansioso para o feedback de vocês, não vejo a hora de saber onde posso evoluir.
 
