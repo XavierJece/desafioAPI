@@ -49,6 +49,8 @@ class TransacaoDAO extends Connection
 
         if(count($res) === 0){
             return 0;
+        }else if (is_null($res[0]['saqueToday'])){
+            return 0;
         }
 
         return $res[0]['saqueToday'];
