@@ -1,0 +1,25 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#b10e4a",
+    "activityBar.activeBorder": "#4ab10e",
+    "activityBar.background": "#b10e4a",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#4ab10e",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#820a36",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#b10e4a",
+    "titleBar.activeBackground": "#820a36",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#820a3699",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#820a36",
+  "cSpell.words": [
+    "Criacao",
+    "Diario",
+    "Transacao",
+    "Transacoes"
+  ]
+}
