@@ -36,6 +36,9 @@ final class TransacaoController
                 $date2 = new DateTime($request->getQueryParams('')['dateFinal']);
             }
 
+            $date1 = $date1->format(DateTime::ISO8601);
+            $date2 = $date2->format(DateTime::ISO8601);
+
             if(strtotime($date1) > strtotime($date2)){
                 $initial = $date2;
                 $final = $date1;
@@ -50,8 +53,8 @@ final class TransacaoController
 
             $res = $transacaoDAO->getAllByConta(
                 $idConta,
-                $initial->format(DateTime::ISO8601),
-                $final->format(DateTime::ISO8601)
+                $initial,
+                $final
             );
 
             $response->getBody()->write(
