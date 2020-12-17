@@ -31,6 +31,7 @@ Na pasta *extras* tem o ``` meubanco.sql ``` execute em seu database administrat
 <center style="max-width: 900px; margin: auto;">
 
   ![DER](./extras/images/banco.png)
+
   DER do Banco de Dados
 
 </center>
@@ -46,6 +47,7 @@ Dentro da *backend* copie o arquivo ``` env.example.php ``` para `` env.php `` a
 <center style="max-width: 900px; margin: auto;">
 
   ![Variáveis de Ambiente](./extras/images/env-backend.png)
+  
   Variáveis de Ambiente do Back-End
 
 </center>
@@ -65,6 +67,7 @@ Dentro da *frontEnd* copie o arquivo ``` .env-exemplo ``` para `` .env `` atuali
 <center style="max-width: 900px; margin: auto;">
 
   ![Variáveis de Ambiente](./extras/images/env-frontend.png)
+  
   Variáveis de Ambiente do Front-End
 
 </center>
@@ -85,6 +88,7 @@ Para iniciar o backend basta iniciar o serviço do APACHE e MYSQL.
 <center style="max-width: 900px; margin: auto;">
 
   ![Executando Server Back-End](./extras/images/server-backend.png)
+  
   Exemplo com o XAMPP
 
 </center>
@@ -98,6 +102,7 @@ Caso a porta 3000 estiver live já inicializará o server em http://localhost:30
 <center style="max-width: 900px; margin: auto;">
 
   ![Executando Server Front-End](./extras/images/server-frontend.png)
+  
   Iniciando com YARN
 
 </center>
@@ -116,6 +121,7 @@ A interface é composta por duas telas (rotas):
   <div style="margin-right: 4px;">
 
   ![Pagina 1 (/)](./extras/images/pagina1.png)
+  
   Pagina de listagem de contas.
 
   </div>
@@ -123,6 +129,7 @@ A interface é composta por duas telas (rotas):
   <div style="margin-left: 4px;">
 
   ![Pagina 2 (/conta/{idConta})](./extras/images/pagina2.png)
+  
   Pagina de visualização de conta.
 
   </div>
@@ -380,6 +387,7 @@ Caso use o **Insomnia** dentro da pasta *extra* tem um arquivo ``` rotas.json ``
   <div style="margin-right: 4px;">
 
   ![Insomnia](./extras/images/insomnia.png)
+  
   Visualização do Insomnia.
 
   </div>
@@ -387,6 +395,7 @@ Caso use o **Insomnia** dentro da pasta *extra* tem um arquivo ``` rotas.json ``
   <div style="margin-left: 4px;">
 
   ![Insomnia - Variáveis de Ambiente](./extras/images/insomnia-env.png)
+  
   Insomnia - Variáveis de Ambiente
 
   </div>
