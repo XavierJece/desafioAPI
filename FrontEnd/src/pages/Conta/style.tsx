@@ -163,28 +163,41 @@ export const Transacao = styled.div<TransacaoProps>`
 
 export const Form = styled.form `
   display: flex;
+  flex-direction: column;
   margin-bottom: 16px;
   width: 100%;
 
+  h2 {
+    font-size: 36px;
+    color: #3d3d4d;
+  }
+
   > div {
+    margin: 12px 0;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+
 
     > div {
-      & + div {
-        margin-top: 4px;
-      }
-
       display: flex;
+      flex-direction: column;
 
-      span {
-        border-radius: 5px 0 0 5px;
-        background: #3a3a3a;
-        border: 2px solid #3a3a3a;
-        color: #fff;
-        height: 40px;
-        padding: 8px;
-        width: 100px;
+      > div {
+        & + div {
+          margin-top: 4px;
+        }
+
+        display: flex;
+
+        span {
+          border-radius: 5px 0 0 5px;
+          background: #3a3a3a;
+          border: 2px solid #3a3a3a;
+          color: #fff;
+          height: 40px;
+          padding: 8px;
+          width: 100px;
+        }
       }
     }
   }

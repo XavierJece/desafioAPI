@@ -159,35 +159,37 @@ const Conta: React.FC = () => {
       )}
 
       <Form onSubmit={handleFilter}>
+        <h2>Extrato</h2>
         <div>
           <div>
-            <span>Data Inicial</span>
-            <input
-              value={filterDate.initial}
-              onChange={(e) => setFilterDate({...filterDate, initial: e.target.value})}
-              placeholder="10/07/2003"
-              type="date"
+            <div>
+              <span>Data Inicial</span>
+              <input
+                value={filterDate.initial}
+                onChange={(e) => setFilterDate({...filterDate, initial: e.target.value})}
+                placeholder="10/07/2003"
+                type="date"
+                />
+            </div>
+            <div>
+              <span>Data Final</span>
+              <input
+                value={filterDate.final}
+                onChange={(e) => setFilterDate({...filterDate, final: e.target.value})}
+                placeholder="17/12/2020"
+                type="date"
               />
+            </div>
           </div>
-          <div>
-            <span>Data Final</span>
-            <input
-              value={filterDate.final}
-              onChange={(e) => setFilterDate({...filterDate, final: e.target.value})}
-              placeholder="17/12/2020"
-              type="date"
-            />
+          <button type="submit">Filtrar</button>
           </div>
-        </div>
-        <button type="submit">Filtrar</button>
+        {inputError && (
+          <Error>
+            <span>{inputError}</span>
+            <FiFrown size={20} />
+          </Error>
+        )}
       </Form>
-
-      {inputError && (
-        <Error>
-          <span>{inputError}</span>
-          <FiFrown size={20} />
-        </Error>
-      )}
 
       {transacoes.map((transacao, i) => (
         <Transacao key={i} entrada={Number(transacao.valor) > 0}>
