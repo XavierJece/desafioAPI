@@ -102,7 +102,7 @@ const Conta: React.FC = () => {
     }else if(param1.length !== 0 && param2.length === 0){
       query = `?${param1}`;
     }else{
-      return;
+      query = ``;
     }
 
     api.get<Transacao[]>(`/conta/${params.conta}/transacoes${query}`).then((response) => {
